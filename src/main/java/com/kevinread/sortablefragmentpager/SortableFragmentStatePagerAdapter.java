@@ -16,6 +16,9 @@
 
 package com.kevinread.sortablefragmentpager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -25,9 +28,6 @@ import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Implementation of {@link android.support.v4.view.PagerAdapter} that
@@ -106,6 +106,9 @@ public abstract class SortableFragmentStatePagerAdapter extends PagerAdapter {
         if (!Arrays.equals(mItemIds, newItemIds)) {
             ArrayList<Fragment.SavedState> newSavedState = new ArrayList<Fragment.SavedState>();
             ArrayList<Fragment> newFragments = new ArrayList<Fragment>();
+            for (int i = 0; i < newItemIds.length; i++) {
+                newFragments.add(null);
+            }
 
             for (int oldPosition = 0; oldPosition < mItemIds.length; oldPosition++) {
                 int newPosition = POSITION_NONE;
@@ -218,8 +221,13 @@ public abstract class SortableFragmentStatePagerAdapter extends PagerAdapter {
         while (mSavedState.size() <= position) {
             mSavedState.add(null);
         }
-        mSavedState.set(position, mFragmentManager.saveFragmentInstanceState(fragment));
-        mFragments.set(position, null);
+        while (mFragments.size() <= position){
+            mFragments.add(null);
+        }
+        if(mFragments.get(position) != null){
+            mSavedState.set(position, mFragmentManager.saveFragmentInstanceState(mFragments.get(position)));
+            mFragments.set(position, null);
+        }
 
         mCurTransaction.remove(fragment);
     }
