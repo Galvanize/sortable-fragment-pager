@@ -1,5 +1,4 @@
-# sortable-fragment-pager
-[DEPRECATED] Sortable FragmentStatePagerAdapter.
+# [DEPRECATED] Sortable FragmentStatePagerAdapter.
 
 Inspired by https://code.google.com/p/android/issues/detail?id=37990
 
